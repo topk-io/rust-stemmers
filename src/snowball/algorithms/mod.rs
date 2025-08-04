@@ -1,5 +1,4 @@
 pub mod arabic;
-pub mod armenian;
 pub mod danish;
 pub mod dutch;
 pub mod english;
