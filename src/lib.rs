@@ -20,20 +20,17 @@
 //!    assert_eq!(en_stemmer.stem("fruitlessly"), "fruitless");
 //! }
 //! ```
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
 
 use std::borrow::Cow;
 
 mod snowball;
 
-use snowball::SnowballEnv;
-use snowball::algorithms;
+pub use snowball::algorithms;
+pub use snowball::SnowballEnv;
 
 /// Enum of all supported algorithms.
 /// Check the [Snowball-Website](https://snowballstem.org/) for details.
-#[derive(Debug, Serialize, Deserialize, Eq, PartialEq, Copy, Clone)]
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub enum Algorithm {
     Arabic,
     Armenian,
@@ -53,7 +50,7 @@ pub enum Algorithm {
     Spanish,
     Swedish,
     Tamil,
-    Turkish
+    Turkish,
 }
 
 /// Wrapps a usable interface around the actual stemmer implementation
@@ -65,25 +62,63 @@ impl Stemmer {
     /// Create a new stemmer from an algorithm
     pub fn create(lang: Algorithm) -> Self {
         match lang {
-            Algorithm::Arabic => Stemmer { stemmer: algorithms::arabic::stem },
-            Algorithm::Armenian => Stemmer { stemmer: algorithms::armenian::stem },
-            Algorithm::Danish => Stemmer { stemmer: algorithms::danish::stem },
-            Algorithm::Dutch => Stemmer { stemmer: algorithms::dutch::stem },
-            Algorithm::English => Stemmer { stemmer: algorithms::english::stem },
-            Algorithm::Finnish => Stemmer { stemmer: algorithms::finnish::stem },
-            Algorithm::French => Stemmer { stemmer: algorithms::french::stem },
-            Algorithm::German => Stemmer { stemmer: algorithms::german::stem },
-            Algorithm::Greek => Stemmer { stemmer: algorithms::greek::stem },
-            Algorithm::Hungarian => Stemmer { stemmer: algorithms::hungarian::stem },
-            Algorithm::Italian => Stemmer { stemmer: algorithms::italian::stem },
-            Algorithm::Norwegian => Stemmer { stemmer: algorithms::norwegian::stem },
-            Algorithm::Portuguese => Stemmer { stemmer: algorithms::portuguese::stem },
-            Algorithm::Romanian => Stemmer { stemmer: algorithms::romanian::stem },
-            Algorithm::Russian => Stemmer { stemmer: algorithms::russian::stem },
-            Algorithm::Spanish => Stemmer { stemmer: algorithms::spanish::stem },
-            Algorithm::Swedish => Stemmer { stemmer: algorithms::swedish::stem },
-            Algorithm::Tamil => Stemmer { stemmer: algorithms::tamil::stem },
-            Algorithm::Turkish => Stemmer { stemmer: algorithms::turkish::stem },
+            Algorithm::Arabic => Stemmer {
+                stemmer: algorithms::arabic::stem,
+            },
+            Algorithm::Armenian => Stemmer {
+                stemmer: algorithms::armenian::stem,
+            },
+            Algorithm::Danish => Stemmer {
+                stemmer: algorithms::danish::stem,
+            },
+            Algorithm::Dutch => Stemmer {
+                stemmer: algorithms::dutch::stem,
+            },
+            Algorithm::English => Stemmer {
+                stemmer: algorithms::english::stem,
+            },
+            Algorithm::Finnish => Stemmer {
+                stemmer: algorithms::finnish::stem,
+            },
+            Algorithm::French => Stemmer {
+                stemmer: algorithms::french::stem,
+            },
+            Algorithm::German => Stemmer {
+                stemmer: algorithms::german::stem,
+            },
+            Algorithm::Greek => Stemmer {
+                stemmer: algorithms::greek::stem,
+            },
+            Algorithm::Hungarian => Stemmer {
+                stemmer: algorithms::hungarian::stem,
+            },
+            Algorithm::Italian => Stemmer {
+                stemmer: algorithms::italian::stem,
+            },
+            Algorithm::Norwegian => Stemmer {
+                stemmer: algorithms::norwegian::stem,
+            },
+            Algorithm::Portuguese => Stemmer {
+                stemmer: algorithms::portuguese::stem,
+            },
+            Algorithm::Romanian => Stemmer {
+                stemmer: algorithms::romanian::stem,
+            },
+            Algorithm::Russian => Stemmer {
+                stemmer: algorithms::russian::stem,
+            },
+            Algorithm::Spanish => Stemmer {
+                stemmer: algorithms::spanish::stem,
+            },
+            Algorithm::Swedish => Stemmer {
+                stemmer: algorithms::swedish::stem,
+            },
+            Algorithm::Tamil => Stemmer {
+                stemmer: algorithms::tamil::stem,
+            },
+            Algorithm::Turkish => Stemmer {
+                stemmer: algorithms::turkish::stem,
+            },
         }
     }
 
@@ -96,11 +131,9 @@ impl Stemmer {
     }
 }
 
-
-
 #[cfg(test)]
 mod tests {
-    use super::{Stemmer, Algorithm};
+    use super::{Algorithm, Stemmer};
 
     fn stemms_to(lhs: &str, rhs: &str, stemmer: Algorithm) {
         assert_eq!(Stemmer::create(stemmer).stem(lhs), rhs);
@@ -118,9 +151,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::German);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::German,
+            );
         }
     }
 
@@ -136,9 +171,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::English);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::English,
+            );
         }
     }
 
@@ -154,9 +191,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::French);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::French,
+            );
         }
     }
 
@@ -172,9 +211,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Spanish);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Spanish,
+            );
         }
     }
 
@@ -190,9 +231,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Portuguese);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Portuguese,
+            );
         }
     }
 
@@ -208,9 +251,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Italian);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Italian,
+            );
         }
     }
 
@@ -226,9 +271,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Romanian);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Romanian,
+            );
         }
     }
 
@@ -244,9 +291,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Russian);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Russian,
+            );
         }
     }
 
@@ -262,9 +311,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Arabic);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Arabic,
+            );
         }
     }
 
@@ -280,9 +331,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Finnish);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Finnish,
+            );
         }
     }
 
@@ -298,9 +351,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Greek);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Greek,
+            );
         }
     }
 
@@ -316,10 +371,11 @@ mod tests {
         let lines = vocab.lines().zip(result.lines());
 
         for (voc, res) in lines {
-            stemms_to(voc.unwrap().as_str(),
-                      res.unwrap().as_str(),
-                      Algorithm::Norwegian);
+            stemms_to(
+                voc.unwrap().as_str(),
+                res.unwrap().as_str(),
+                Algorithm::Norwegian,
+            );
         }
     }
-
 }
